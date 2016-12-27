@@ -29,6 +29,9 @@ RUN a2enmod rewrite expires
 
 VOLUME /var/www/html
 
+RUN chown -R www-data:www-data /var/log/apache2
+RUN sed -i 's/Listen 80/Listen 8080/g' /etc/apache2/ports.conf
+
 ENV WORDPRESS_VERSION 4.7
 ENV WORDPRESS_SHA1 1e14144c4db71421dc4ed22f94c3914dfc3b7020
 
@@ -44,3 +47,5 @@ COPY docker-entrypoint.sh /usr/local/bin/
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["apache2-foreground"]
+
+USER www-data
